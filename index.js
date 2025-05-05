@@ -8,7 +8,6 @@ function showLogin() {
     document.getElementById("loginContainer").style.display = "block";
 }
 
-function confirmPassword(){
   // Get the password and confirm password fields
   const password = document.getElementById('password');
   const confirmPassword = document.getElementById('confirmPassword');
@@ -20,4 +19,4 @@ function confirmPassword(){
       alert('Passwords do not match!');
       event.preventDefault(); // Prevent form submission
     }
-}}
+}
