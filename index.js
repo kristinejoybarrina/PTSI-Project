@@ -130,3 +130,29 @@ const data = {
       barangays: ["Barangay Abucay", "Barangay Basper", "Barangay 88", "Barangay 75"]
     }
   };
+
+  document.getElementById("province").addEventListener("change", function () {
+    const province = this.value;
+    const citySelect = document.getElementById("city");
+    const districtSelect = document.getElementById("district");
+    const barangaySelect = document.getElementById("barangay");
+  
+    // Clear previous options
+    citySelect.innerHTML = "<option value=''>-- Select City / Municipality --</option>";
+    districtSelect.innerHTML = "<option value=''>-- Select District --</option>";
+    barangaySelect.innerHTML = "<option value=''>-- Select Barangay --</option>";
+  
+    if (data[province]) {
+      data[province].cities.forEach(city => {
+        citySelect.innerHTML += `<option value="${city}">${city}</option>`;
+      });
+  
+      data[province].districts.forEach(district => {
+        districtSelect.innerHTML += `<option value="${district}">${district}</option>`;
+      });
+  
+      data[province].barangays.forEach(barangay => {
+        barangaySelect.innerHTML += `<option value="${barangay}">${barangay}</option>`;
+      });
+    }
+  });
