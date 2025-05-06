@@ -87,3 +87,46 @@ document.addEventListener('DOMContentLoaded', function() {
         loginContainer.style.display = 'block';
     }
 });
+
+const data = {
+    "Manila": {
+      cities: ["Manila"],
+      districts: ["Tondo", "Sampaloc", "Ermita", "Malate"],
+      barangays: ["Barangay 1", "Barangay 2", "Barangay 3", "Barangay 4"]
+    },
+    "Albay": {
+      cities: ["Legazpi", "Daraga", "Tabaco"],
+      districts: ["Legazpi Central", "Daraga North"],
+      barangays: ["Bagumbayan", "Camalig", "Barangay Tinago", "San Jose"]
+    },
+    "Iloilo": {
+      cities: ["Iloilo City", "Passi"],
+      districts: ["Jaro", "Lapuz"],
+      barangays: ["Lapaz", "Barangay Taculing", "Barangay Abucay", "Balintawak"]
+    },
+    "Cagayan": {
+      cities: ["Tuguegarao", "Aparri"],
+      districts: ["Centro 1", "Pengue Ruyu"],
+      barangays: ["Barangay Carig", "Barangay Ugac", "San Gabriel", "Cataggaman"]
+    },
+    "Negros Oriental": {
+      cities: ["Dumaguete", "Bais", "Bayawan"],
+      districts: ["North District", "West District"],
+      barangays: ["Barangay Calindagan", "Barangay Daro", "Barangay Banilad", "Barangay Tinago"]
+    },
+    "Davao": {
+      cities: ["Davao City", "Panabo"],
+      districts: ["Talomo", "Buhangin"],
+      barangays: ["Barangay 5-A", "Barangay 9-A", "Barangay Mintal", "Barangay Ma-a"]
+    },
+    "Roxas": {
+      cities: ["Roxas City"],
+      districts: ["Pueblo", "Lawa-an"],
+      barangays: ["Barangay Lawaan", "Barangay Inzo", "Barangay Tiza", "Barangay Tanque"]
+    },
+    "Eastern Visayas": {
+      cities: ["Tacloban", "Ormoc"],
+      districts: ["Downtown", "San Jose"],
+      barangays: ["Barangay Abucay", "Barangay Basper", "Barangay 88", "Barangay 75"]
+    }
+  };
