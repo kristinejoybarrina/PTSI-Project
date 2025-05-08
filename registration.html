@@ -1,130 +1,171 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registration Form</title>
-    <link rel="stylesheet" href="registration-style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registration Form</title>
+  <link rel="stylesheet" href="registration-style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-    <div>
-        <img src="img/BG.png" alt="Philippine Tuberculosis Society Inc." id="login-bg">
+  
+  <div>
+    <img src="img/BG.png" alt="Philippine Tuberculosis Society Inc." id="login-bg">
+    <!-- Profile Upload Section -->
     <div class="signup-container" id="signupContainer">
-        <h1>Personal Information</h1>
-        <form action="/register" method="POST">
-            <div class="form-row">
-              <div style="flex: 1;">
-                <label for="lastname">Last Name</label>
-                <input type="text" id="lastname" name="lastname" required>
-              </div>
-              <div style="flex: 1;">
-                <label for="firstname">First Name</label>
-                <input type="text" id="firstname" name="firstname" required>
-              </div>
-              <div style="flex: 1;">
-                <label for="middlename">Middle Name</label>
-                <input type="text" id="middlename" name="middlename">
-              </div>
-              <div style="flex: 1;">
-                <label for="suffix">Suffix Name</label>
-                <input type="text" id="suffix" name="suffix">
-              </div>
-            </div>
-      
-            <div class="form-row">
-              <div style="flex: 1;">
-                <label for="email">Email Address</label>
-                <input type="email" id="email" name="email" required>
-              </div>
-              <div style="flex: 1;">
-                <label for="username">Username</label>
-                <input type="text" id="username" name="username" required>
-              </div>
-              <div style="flex: 1;">
-                <label for="age">Age</label>
-                <input type="number" id="age" name="age" required>
-              </div>
-              <div style="flex: 1;">
-                <label for="phone">Phone Number</label>
-                <input type="text" id="phone" name="phone" required>
-              </div>
-            </div>
-      
-            <div class="form-row">
-                <div style="flex: 1;">
-                    <label for="street">Blk / Street Name</label>
-                    <input type="text" id="street" name="street" required>
-                  </div>
-              
-                  <div style="flex: 1;">
-                    <label for="province">Province / Region</label>
-                    <select id="province" name="province" required>
-                      <option value="">-- Select Province / Region --</option>
-                      <option value="Manila">Manila</option>
-                      <option value="Albay">Albay</option>
-                      <option value="Iloilo">Iloilo</option>
-                      <option value="Cagayan">Cagayan</option>
-                      <option value="Negros Oriental">Negros Oriental</option>
-                      <option value="Davao">Davao</option>
-                      <option value="Roxas">Roxas</option>
-                      <option value="Eastern Visayas">Eastern Visayas</option>
-                    </select>
-                  </div>
-              
-                  <div style="flex: 1;">
-                    <label for="city">City / Municipality</label>
-                    <select id="city" name="city" required></select>
-                  </div>
-              
-                  <div style="flex: 1;">
-                    <label for="district">District</label>
-                    <select id="district" name="district" required></select>
-                  </div>
-              
-                  <div style="flex: 1;">
-                    <label for="barangay">Barangay</label>
-                    <select id="barangay" name="barangay" required></select>
-                  </div>
-              
-                  <div style="flex: 1;">
-                    <label for="postal">Postal Code</label>
-                    <input type="text" id="postal" name="postal" required>
-                  </div>
-                </div>
-      
-            <div class="form-row">
-              <div style="flex: 1;">
-                <label for="regPassword">Password:</label>
-                <input type="password" id="regPassword" name="password" required>
-              </div>
-              <div style="flex: 1;">
-                <label for="confirmPassword">Confirm Password:</label>
-                <input type="password" id="confirmPassword" name="confirmPassword" required>
-              </div>
-            </div>
-          
-            <h1>Emergency Contact Information</h1>
-            <div class="form-row">
-              <div style="flex: 1;">
-                <label for="emergencyName">Name of Emergency Contact</label>
-                <input type="text" id="emergencyName" name="emergencyName" required>
-              </div>
-              <div style="flex: 1;">
-                <label for="emergencyNumber">Contact Number</label>
-                <input type="text" id="emergencyNumber" name="emergencyNumber" required>
-              </div>
-            </div>
-      
-            <div class="button-row">
-              <button type="reset">Cancel</button>
-              <button type="submit">Register</button>
-            </div>
-        </form>
-        <p>Already have an account? <a href="login.html">Login Here.</a></p>
+      <h1>Registration Form</h1>
+      <p>Welcome to the Philippine Tuberculosis Society Inc. (PTSI) Registration Page.</p>
+      <p>Please fill out the form below to create your account.</p>
+      <div class="upload">
+        <img src="noprofil.jpg" alt="Profile Picture" id="profileImage" height="150" style="border-radius: 50%; border: 2px solid #ccc;">
+        <div class="round">
+          <input type="file" id="fileInput" accept="image/*" style="opacity: 0; position: absolute; width: 100%; height: 100%; cursor: pointer;">
+          <i class="fa fa-camera"></i>
+        </div>
+        <button id="updateBtn">Update</button>
+        <button id="removeBtn" style="margin-top: 10px;">Remove</button>
       </div>
-    </div> 
 
-    <script src="index.js"></script>
+    <!-- Registration Form Section -->
+      <h1>Personal Information</h1>
+      <form action="/register" method="POST">
+        <div class="form-row">
+          <div style="flex: 1;">
+            <label for="lastname">Last Name</label>
+            <input type="text" id="lastname" name="lastname" required>
+          </div>
+          <div style="flex: 1;">
+            <label for="firstname">First Name</label>
+            <input type="text" id="firstname" name="firstname" required>
+          </div>
+          <div style="flex: 1;">
+            <label for="middlename">Middle Name</label>
+            <input type="text" id="middlename" name="middlename">
+          </div>
+          <div style="flex: 1;">
+            <label for="suffix">Suffix Name</label>
+            <input type="text" id="suffix" name="suffix">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div style="flex: 1;">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+          <div style="flex: 1;">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required>
+          </div>
+          <div style="flex: 1;">
+            <label for="age">Age</label>
+            <input type="number" id="age" name="age" required>
+          </div>
+          <div style="flex: 1;">
+            <label for="phone">Phone Number</label>
+            <input type="text" id="phone" name="phone" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div style="flex: 1;">
+            <label for="street">Blk / Street Name</label>
+            <input type="text" id="street" name="street" required>
+          </div>
+
+          <div style="flex: 1;">
+            <label for="province">Province / Region</label>
+            <select id="province" name="province" required>
+              <option value="">-- Select Province / Region --</option>
+              <option value="Manila">Manila</option>
+              <option value="Albay">Albay</option>
+              <option value="Iloilo">Iloilo</option>
+              <option value="Cagayan">Cagayan</option>
+              <option value="Negros Oriental">Negros Oriental</option>
+              <option value="Davao">Davao</option>
+              <option value="Roxas">Roxas</option>
+              <option value="Eastern Visayas">Eastern Visayas</option>
+            </select>
+          </div>
+
+          <div style="flex: 1;">
+            <label for="city">City / Municipality</label>
+            <select id="city" name="city" required></select>
+          </div>
+
+          <div style="flex: 1;">
+            <label for="district">District</label>
+            <select id="district" name="district" required></select>
+          </div>
+
+          <div style="flex: 1;">
+            <label for="barangay">Barangay</label>
+            <select id="barangay" name="barangay" required></select>
+          </div>
+
+          <div style="flex: 1;">
+            <label for="postal">Postal Code</label>
+            <input type="text" id="postal" name="postal" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div style="flex: 1;">
+            <label for="regPassword">Password:</label>
+            <input type="password" id="regPassword" name="password" required>
+          </div>
+          <div style="flex: 1;">
+            <label for="confirmPassword">Confirm Password:</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" required>
+          </div>
+        </div>
+
+        <h1>Emergency Contact Information</h1>
+        <div class="form-row">
+          <div style="flex: 1;">
+            <label for="emergencyName">Name of Emergency Contact</label>
+            <input type="text" id="emergencyName" name="emergencyName" required>
+          </div>
+          <div style="flex: 1;">
+            <label for="emergencyNumber">Contact Number</label>
+            <input type="text" id="emergencyNumber" name="emergencyNumber" required>
+          </div>
+        </div>
+
+        <div class="button-row">
+          <button type="reset">Cancel</button>
+          <button type="submit">Register</button>
+        </div>
+      </form>
+      <p>Already have an account? <a href="login.html">Login Here.</a></p>
+    </div>
+  </div>
+
+  <script src="index.js"></script>
+
+  <!-- Profile Upload Script -->
+  <script>
+    const fileInput = document.getElementById('fileInput');
+    const profileImage = document.getElementById('profileImage');
+    const removeBtn = document.getElementById('removeBtn');
+    const defaultImage = 'noprofil.jpg'; // default placeholder image
+
+    fileInput.addEventListener('change', function () {
+      const file = this.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          profileImage.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    removeBtn.addEventListener('click', function () {
+      fileInput.value = ''; // clear input
+      profileImage.src = defaultImage; // reset image
+    });
+  </script>
 </body>
 </html>
