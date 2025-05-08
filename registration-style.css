@@ -36,6 +36,26 @@ body {
   letter-spacing: 0.5px;
 }
 
+/* Scrollbar styling */
+.signup-container::-webkit-scrollbar {
+  width: 10px;
+}
+
+.signup-container::-webkit-scrollbar-track {
+  background: #e0e0e0;
+  border-radius: 5px;
+}
+
+.signup-container::-webkit-scrollbar-thumb {
+  background: #001aff; 
+  border-radius: 5px; 
+  border: 2px solid #e0e0e0; 
+}
+
+.signup-container::-webkit-scrollbar-thumb:hover {
+  background: #0000cc;
+}
+
 /* Form layout */
 .form-row {
   display: flex;

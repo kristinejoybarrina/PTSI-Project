@@ -147,9 +147,11 @@
   <script>
     const fileInput = document.getElementById('fileInput');
     const profileImage = document.getElementById('profileImage');
+    const updateBtn = document.getElementById('updateBtn');
     const removeBtn = document.getElementById('removeBtn');
-    const defaultImage = 'noprofil.jpg'; // default placeholder image
-
+    const defaultImage = 'img/noprofil.jpg';
+  
+    // Show file preview on file change
     fileInput.addEventListener('change', function () {
       const file = this.files[0];
       if (file) {
@@ -160,11 +162,17 @@
         reader.readAsDataURL(file);
       }
     });
-
-    removeBtn.addEventListener('click', function () {
-      fileInput.value = ''; // clear input
-      profileImage.src = defaultImage; // reset image
+  
+    // Trigger file input when update button is clicked
+    updateBtn.addEventListener('click', function () {
+      fileInput.click();
     });
-  </script>
+  
+    // Reset to default image
+    removeBtn.addEventListener('click', function () {
+      fileInput.value = '';
+      profileImage.src = defaultImage;
+    });
+  </script>  
 </body>
 </html>
