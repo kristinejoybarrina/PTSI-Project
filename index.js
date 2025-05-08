@@ -156,3 +156,25 @@ const data = {
       });
     }
   });
+
+  <!-- Profile Upload Script -->
+  const fileInput = document.getElementById('fileInput');
+  const profileImage = document.getElementById('profileImage');
+  const removeBtn = document.getElementById('removeBtn');
+  const defaultImage = 'noprofil.jpg'; // default placeholder image
+
+  fileInput.addEventListener('change', function () {
+    const file = this.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        profileImage.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+
+  removeBtn.addEventListener('click', function () {
+    fileInput.value = ''; // clear input
+    profileImage.src = defaultImage; // reset image
+  });
