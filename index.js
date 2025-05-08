@@ -157,7 +157,7 @@ const data = {
     }
   });
 
-  <!-- Profile Upload Script -->
+  //Profile Upload Script
   const fileInput = document.getElementById('fileInput');
   const profileImage = document.getElementById('profileImage');
   const removeBtn = document.getElementById('removeBtn');
