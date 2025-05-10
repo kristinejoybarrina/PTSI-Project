@@ -44,18 +44,26 @@
           </div>
           <div style="flex: 1;">
             <label for="suffix">Suffix Name</label>
-            <input type="text" id="suffix" name="suffix">
+            <select id="suffix" name="suffix">
+              <option value="">-- Select Suffix --</option>
+              <option value="Jr.">Jr.</option>
+              <option value="Sr.">Sr.</option>
+              <option value="I">I</option>
+              <option value="II">II</option>
+              <option value="III">III</option>
+              <option value="IV">IV</option>
+              <option value="V">V</option>
+              <option value="VI">VI</option>
+              <option value="VII">VII</option>
+              <option value="VIII">VIII</option>
+              <option value="N/A">N/A</option>
+            </select>
           </div>
         </div>
-
         <div class="form-row">
           <div style="flex: 1;">
             <label for="email">Email Address</label>
             <input type="email" id="email" name="email" required>
-          </div>
-          <div style="flex: 1;">
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username" required>
           </div>
           <div style="flex: 1;">
             <label for="age">Age</label>
@@ -67,49 +75,44 @@
           </div>
         </div>
 
+        <h1>Home Address Details</h1>
         <div class="form-row">
           <div style="flex: 1;">
             <label for="street">Blk / Street Name</label>
             <input type="text" id="street" name="street" required>
           </div>
-
-          <div style="flex: 1;">
-            <label for="province">Province / Region</label>
-            <select id="province" name="province" required>
-              <option value="">-- Select Province / Region --</option>
-              <option value="Manila">Manila</option>
-              <option value="Albay">Albay</option>
-              <option value="Iloilo">Iloilo</option>
-              <option value="Cagayan">Cagayan</option>
-              <option value="Negros Oriental">Negros Oriental</option>
-              <option value="Davao">Davao</option>
-              <option value="Roxas">Roxas</option>
-              <option value="Eastern Visayas">Eastern Visayas</option>
-            </select>
-          </div>
-
-          <div style="flex: 1;">
-            <label for="city">City / Municipality</label>
-            <select id="city" name="city" required></select>
-          </div>
-
-          <div style="flex: 1;">
-            <label for="district">District</label>
-            <select id="district" name="district" required></select>
-          </div>
-
           <div style="flex: 1;">
             <label for="barangay">Barangay</label>
             <select id="barangay" name="barangay" required></select>
           </div>
-
+          <div style="flex: 1;">
+            <label for="city">City / Municipality</label>
+            <select id="city" name="city" required></select>
+          </div>
+          <div style="flex: 1;">
+            <label for="region">Region </label>
+            <select id="region" name="region" required></select>
+          </div>
+          <div style="flex: 1;">
+            <label for="province">Province </label>
+            <select id="province" name="province" required></select>
+          </div>
+          <div style="flex: 1;">
+            <label for="district">District</label>
+            <select id="district" name="district" required></select>
+          </div>
           <div style="flex: 1;">
             <label for="postal">Postal Code</label>
             <input type="text" id="postal" name="postal" required>
           </div>
         </div>
 
+        <h1>Login Credentials</h1>
         <div class="form-row">
+          <div style="flex: 1;">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required>
+          </div>
           <div style="flex: 1;">
             <label for="regPassword">Password:</label>
             <input type="password" id="regPassword" name="password" required>
@@ -125,6 +128,10 @@
           <div style="flex: 1;">
             <label for="emergencyName">Name of Emergency Contact</label>
             <input type="text" id="emergencyName" name="emergencyName" required>
+          </div>
+          <div style="flex: 1;">
+            <label for="relationship">Relationship</label>
+            <input type="text" id="relationship" name="relationship" required>
           </div>
           <div style="flex: 1;">
             <label for="emergencyNumber">Contact Number</label>
