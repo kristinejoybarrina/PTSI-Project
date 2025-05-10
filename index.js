@@ -25,7 +25,24 @@ function validateLoginForm(event) {
     return true;
 }
 
-// Function to validate registration form
+// Function to validate phone number format (Philippine format)
+function validatePhoneNumber(phone) {
+    const phoneRegex = /^(09|\+639)\d{9}$/;
+    return phoneRegex.test(phone);
+}
+
+// Function to validate age (18 years or older)
+function validateAge(age) {
+    const ageNum = parseInt(age);
+    return ageNum >= 18 && ageNum <= 100;
+}
+
+// Function to validate postal code (4 digits)
+function validatePostalCode(postal) {
+    return /^\d{4}$/.test(postal);
+}
+
+// Enhanced registration form validation
 function validateRegistrationForm(event) {
     const firstname = document.getElementById('firstname').value;
     const lastname = document.getElementById('lastname').value;
@@ -33,9 +50,13 @@ function validateRegistrationForm(event) {
     const address = document.getElementById('address').value;
     const regPassword = document.getElementById('regPassword').value;
     const confirmPassword = document.getElementById('confirmPassword').value;
+    const phone = document.getElementById('phone').value;
+    const age = document.getElementById('age').value;
+    const postal = document.getElementById('postal').value;
+    const emergencyNumber = document.getElementById('emergencyNumber').value;
 
     // Check if required fields are filled
-    if (!firstname || !lastname || !email || !address || !regPassword || !confirmPassword) {
+    if (!firstname || !lastname || !email || !address || !regPassword || !confirmPassword || !phone || !age || !postal || !emergencyNumber) {
         alert('Please fill in all required fields');
         event.preventDefault();
         return false;
@@ -64,6 +85,34 @@ function validateRegistrationForm(event) {
         return false;
     }
 
+    // Validate phone number
+    if (!validatePhoneNumber(phone)) {
+        alert('Please enter a valid Philippine phone number (e.g., 09123456789 or +639123456789)');
+        event.preventDefault();
+        return false;
+    }
+
+    // Validate emergency contact number
+    if (!validatePhoneNumber(emergencyNumber)) {
+        alert('Please enter a valid emergency contact number');
+        event.preventDefault();
+        return false;
+    }
+
+    // Validate age
+    if (!validateAge(age)) {
+        alert('Age must be between 18 and 100 years old');
+        event.preventDefault();
+        return false;
+    }
+
+    // Validate postal code
+    if (!validatePostalCode(postal)) {
+        alert('Please enter a valid 4-digit postal code');
+        event.preventDefault();
+        return false;
+    }
+
     return true;
 }
 
@@ -85,6 +134,69 @@ document.addEventListener('DOMContentLoaded', function() {
     const loginContainer = document.getElementById('loginContainer');
     if (loginContainer) {
         loginContainer.style.display = 'block';
+    }
+
+    // Real-time phone number validation
+    const phoneInput = document.getElementById('phone');
+    if (phoneInput) {
+        phoneInput.addEventListener('input', function() {
+            if (!validatePhoneNumber(this.value) && this.value.length > 0) {
+                this.setCustomValidity('Please enter a valid Philippine phone number');
+            } else {
+                this.setCustomValidity('');
+            }
+        });
+    }
+
+    // Real-time emergency number validation
+    const emergencyNumberInput = document.getElementById('emergencyNumber');
+    if (emergencyNumberInput) {
+        emergencyNumberInput.addEventListener('input', function() {
+            if (!validatePhoneNumber(this.value) && this.value.length > 0) {
+                this.setCustomValidity('Please enter a valid phone number');
+            } else {
+                this.setCustomValidity('');
+            }
+        });
+    }
+
+    // Real-time age validation
+    const ageInput = document.getElementById('age');
+    if (ageInput) {
+        ageInput.addEventListener('input', function() {
+            if (!validateAge(this.value) && this.value.length > 0) {
+                this.setCustomValidity('Age must be between 18 and 100');
+            } else {
+                this.setCustomValidity('');
+            }
+        });
+    }
+
+    // Real-time postal code validation
+    const postalInput = document.getElementById('postal');
+    if (postalInput) {
+        postalInput.addEventListener('input', function() {
+            if (!validatePostalCode(this.value) && this.value.length > 0) {
+                this.setCustomValidity('Please enter a valid 4-digit postal code');
+            } else {
+                this.setCustomValidity('');
+            }
+        });
+    }
+
+    // Prevent form submission if any field is invalid
+    const form = document.querySelector('form');
+    if (form) {
+        form.addEventListener('submit', function(event) {
+            if (!this.checkValidity()) {
+                event.preventDefault();
+                // Show validation messages
+                const invalidInputs = this.querySelectorAll(':invalid');
+                if (invalidInputs.length > 0) {
+                    invalidInputs[0].focus();
+                }
+            }
+        });
     }
 });
 
