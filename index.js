@@ -158,8 +158,7 @@ const data = {
   });
 
   
-  <!-- Profile Upload Script -->
-  <script>
+ //Profile Upload Script
     const fileInput = document.getElementById('fileInput');
     const profileImage = document.getElementById('profileImage');
     const updateBtn = document.getElementById('updateBtn');
