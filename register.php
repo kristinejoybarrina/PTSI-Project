@@ -26,7 +26,7 @@
         $postal = $_POST['postal'];
         $password = $POST['regPassword'];
         //$confirmPassword = $_POST['confirmPassword'];
-        $emergencyName = $POST['emergencyName']
+        $emergencyName = $POST['emergencyName'];
         $emergencyNumber = $POST['emergencyNumber'];
 
 
@@ -34,7 +34,7 @@
         if (!empty($name) && !empty($email) && !empty($address)) {
             // Prepare SQL statement
             $stmt = $conn->prepare("INSERT INTO users (lastname, firstname, middlename, suffix, email, username, age, phone, street, provice, city, district, barangay, postal, regPassword, emergencyName, emergencyNumber) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            $stmt->bind_param("sssssssssssssssss", $lastname, $firstname, $middlename, $suffix, $email, $username, $age, $phone, $street, $province, $city, $district, $barangay, $postal $password, $emergencyName, $emergencyNumber);
+            $stmt->bind_param("sssssssssssssssss", $lastname, $firstname, $middlename, $suffix, $email, $username, $age, $phone, $street, $province, $city, $district, $barangay, $postal, $password, $emergencyName, $emergencyNumber);
 
             // Execute the statement
             if ($stmt->execute()) {
