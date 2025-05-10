@@ -268,3 +268,34 @@ const data = {
       });
     }
   });
+
+  
+ //Profile Upload Script
+    const fileInput = document.getElementById('fileInput');
+    const profileImage = document.getElementById('profileImage');
+    const updateBtn = document.getElementById('updateBtn');
+    const removeBtn = document.getElementById('removeBtn');
+    const defaultImage = 'img/noprofil.jpg';
+  
+    // Show file preview on file change
+    fileInput.addEventListener('change', function () {
+      const file = this.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          profileImage.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+  
+    // Trigger file input when update button is clicked
+    updateBtn.addEventListener('click', function () {
+      fileInput.click();
+    });
+  
+    // Reset to default image
+    removeBtn.addEventListener('click', function () {
+      fileInput.value = '';
+      profileImage.src = defaultImage;
+    });
