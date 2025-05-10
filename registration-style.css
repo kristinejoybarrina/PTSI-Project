@@ -15,7 +15,7 @@ body {
 /* Main container */
 .signup-container {
   background: white;
-  max-width: 750px;
+  max-width: 780px;
   margin: 40px auto;
   border-radius: 15px;
   padding: 20px 30px;
@@ -28,10 +28,10 @@ body {
 .signup-container h1 {
   font-size: 30px;
   font-weight: 700;
-  color: #383899;
+  color: #04047a;
   margin-top: 20px;
   margin-bottom: 10px;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 2px solid #ccc;
   padding-bottom: 5px;
   letter-spacing: 0.5px;
 }
@@ -60,13 +60,15 @@ body {
 .form-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 25px;
+  gap: 13px;
   margin-bottom: 20px;
+  align-items: flex-end;
 }
 
 .form-row > div {
-  flex: 1;
-  min-width: 180px;
+  flex: 1 1 250px;
+  min-width: 160px;
+  box-sizing: border-box;  
 }
 
 label {
@@ -81,6 +83,14 @@ input, select {
   font-size: 14px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  box-sizing: border-box; 
+}
+
+/* Optionally, ensure select dropdowns are consistent in height with input fields */
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
 
 /* Profile upload section */
