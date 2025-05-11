@@ -14,6 +14,7 @@ $conn = new mysqli("localhost", "root", "", "user_registration");
 // Connection failed
 if ($conn->connect_error){
     die("Connection failed". $conn->connect_error)
+
 }
 
 $query = "SELECT * FROM users WHERE username = $username AND password = $password";
@@ -33,6 +34,11 @@ if ($result->num_rows > 0) {
 } else {
     // Invalid credentials
     echo "Invalid username or password";
+
+}
+    // Close the connection
+    $conn->close();
+
 
 }
 ?>
