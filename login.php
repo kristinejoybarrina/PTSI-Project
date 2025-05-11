@@ -27,7 +27,7 @@ $stmt->execute();
 $result = $stmt->get_result();
 
 
-$result = $conn->query($query);
+$result = $stmt->get_result();
 
 if ($result->num_rows > 0) {
     // User found, set session variables
@@ -44,6 +44,7 @@ if ($result->num_rows > 0) {
 
 }
     // Close the connection
+    $stmt->close();
     $conn->close();
 
 }
