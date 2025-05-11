@@ -17,7 +17,7 @@ session_start();
     $barangay = $_POST['barangay'];
     $username = $_POST['username'];
     $password = $_POST['password'];
-    $confirmPassword = $_POST['confirmPassword'];
+    //$confirmPassword = $_POST['confirmPassword'];
     $emergencyName = $_POST['emergencyName'];
     $relationship = $_POST['relationship'];
     $emergencyNumber = $_POST['emergencyNumber'];
@@ -30,9 +30,9 @@ session_start();
         die("Connection failed: " . $conn->connect_error);
     }
     else{
-        $stmt = $conn->prepare("insert into users (lastname, firstname, middlename, suffix, email, username, age, phone, street, province, city, barangay, postal, regPassword, emergencyName, emergencyNumber) 
+        $stmt = $conn->prepare("insert into users (lastname, firstname, middlename, suffix, email, age, phone, street, region, province, city, barangay, username, password, emergency_name, relationship, emergency_number) 
                 values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("ssssssiisssssissi",  $lastname, $firstname, $middlename, $suffix, $email, $username, $age, $phone, $street, $province, $city, $barangay, $postal,  $password, $emergencyName, $emergencyNumber);
+        $stmt->bind_param("ssssssiisssssissi",  $lastname, $firstname, $middlename, $suffix, $email, $username, $age, $phone, $street, $region, $province, $city, $barangay, $username, $password, $emergencyName, $relationship, $emergencyNumber);
         $stmt->execute();
         echo "Registration successful";
         $stmt->close();
