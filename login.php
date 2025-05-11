@@ -9,7 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
 // Connect to the database
-$conn = new mysqli("localhost", "root," "", "user_registration");
+$conn = new mysqli("localhost", "root", "", "user_registration");
 
 // Connection failed
 if ($conn->connect_error){
