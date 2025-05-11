@@ -30,7 +30,7 @@ session_start();
         die("Connection failed: " . $conn->connect_error);
     }
     else{
-        $stmt = $conn->prepare("insert into users (lastname, firstname, middlename, suffix, email, age, phone, street, region, province, city, barangay, username, password, emergency_name, relationship, emergency_number) 
+        $stmt = $conn->prepare("INSERT INTO users (lastname, firstname, middlename, suffix, email, age, phone, street, region, province, city, barangay, username, password, emergency_name, relationship, emergency_number) 
                 values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         $stmt->bind_param("sssssiisssssssssi",  $lastname, $firstname, $middlename, $suffix, $email, $username, $age, $phone, $street, $region, $province, $city, $barangay, $username, $password, $emergencyName, $relationship, $emergencyNumber);
         $stmt->execute();
