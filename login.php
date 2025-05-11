@@ -17,6 +17,14 @@ if ($conn->connect_error){
 }
 
 $query = "SELECT * FROM users WHERE username = $username AND password = $password";
+$stmt = $conn->prepare($query);
+
+// Bind the parameters
+$stmt->bind_param("ss", $username, $password);
+
+// Execute the query
+$stmt->execute();
+$result = $stmt->get_result();
 
 
 $result = $conn->query($query);
