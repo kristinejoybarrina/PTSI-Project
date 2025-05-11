@@ -198,78 +198,113 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+
+    // Load address data
+    loadAddressData();
+
+    // Password validation
+    const passwordInput = document.getElementById('regPassword');
+    const confirmPasswordInput = document.getElementById('confirmPassword');
+    const passwordRequirements = {
+        length: false,
+        letter: false,
+        number: false,
+        match: false
+    };
+
+    function validatePassword() {
+        const password = passwordInput.value;
+        const confirmPassword = confirmPasswordInput.value;
+        
+        // Check length
+        passwordRequirements.length = password.length >= 8;
+        
+        // Check for letters
+        passwordRequirements.letter = /[A-Za-z]/.test(password);
+        
+        // Check for numbers
+        passwordRequirements.number = /\d/.test(password);
+        
+        // Check if passwords match
+        passwordRequirements.match = password === confirmPassword && password !== '';
+
+        // Update visual feedback
+        updatePasswordFeedback();
+    }
+
+    function updatePasswordFeedback() {
+        // Only show errors if fields have been touched
+        const showErrors = passwordInput.classList.contains('touched') || 
+                          confirmPasswordInput.classList.contains('touched');
+
+        // Update error messages
+        let errorMessage = '';
+        if (showErrors) {
+            if (!passwordRequirements.length) {
+                errorMessage += 'Password must be at least 8 characters long\n';
+            }
+            if (!passwordRequirements.letter) {
+                errorMessage += 'Password must contain at least one letter\n';
+            }
+            if (!passwordRequirements.number) {
+                errorMessage += 'Password must contain at least one number\n';
+            }
+            if (!passwordRequirements.match && confirmPasswordInput.value !== '') {
+                errorMessage += 'Passwords do not match\n';
+            }
+
+            // Style borders only if fields have been touched
+            passwordInput.style.border = (passwordRequirements.length && 
+                                        passwordRequirements.letter && 
+                                        passwordRequirements.number)
+                                        ? '1px solid #4CAF50'
+                                        : '2px solid #ff3333';
+
+            confirmPasswordInput.style.border = passwordRequirements.match
+                                              ? '1px solid #4CAF50'
+                                              : '2px solid #ff3333';
+        }
+
+        // Display error message
+        let errorDiv = document.getElementById('password-error');
+        if (!errorDiv) {
+            errorDiv = document.createElement('div');
+            errorDiv.id = 'password-error';
+            passwordInput.parentNode.appendChild(errorDiv);
+        }
+
+        errorDiv.innerHTML = errorMessage.replace(/\n/g, '<br>');
+        errorDiv.className = showErrors && errorMessage ? 'visible' : '';
+
+        // Set custom validity
+        passwordInput.setCustomValidity(errorMessage);
+        confirmPasswordInput.setCustomValidity(passwordRequirements.match ? '' : 'Passwords do not match');
+    }
+
+    // Add blur event listeners to mark fields as touched
+    if (passwordInput) {
+        passwordInput.addEventListener('blur', function() {
+            this.classList.add('touched');
+            validatePassword();
+        });
+    }
+    
+    if (confirmPasswordInput) {
+        confirmPasswordInput.addEventListener('blur', function() {
+            this.classList.add('touched');
+            validatePassword();
+        });
+    }
+
+    // Add focus event listener to show requirements
+    if (passwordInput) {
+        passwordInput.addEventListener('focus', function() {
+            const errorDiv = document.getElementById('password-error');
+            if (errorDiv) errorDiv.classList.add('visible');
+        });
+    }
 });
 
-const data = {
-    "Manila": {
-      cities: ["Manila"],
-      districts: ["Tondo", "Sampaloc", "Ermita", "Malate"],
-      barangays: ["Barangay 1", "Barangay 2", "Barangay 3", "Barangay 4"]
-    },
-    "Albay": {
-      cities: ["Legazpi", "Daraga", "Tabaco"],
-      districts: ["Legazpi Central", "Daraga North"],
-      barangays: ["Bagumbayan", "Camalig", "Barangay Tinago", "San Jose"]
-    },
-    "Iloilo": {
-      cities: ["Iloilo City", "Passi"],
-      districts: ["Jaro", "Lapuz"],
-      barangays: ["Lapaz", "Barangay Taculing", "Barangay Abucay", "Balintawak"]
-    },
-    "Cagayan": {
-      cities: ["Tuguegarao", "Aparri"],
-      districts: ["Centro 1", "Pengue Ruyu"],
-      barangays: ["Barangay Carig", "Barangay Ugac", "San Gabriel", "Cataggaman"]
-    },
-    "Negros Oriental": {
-      cities: ["Dumaguete", "Bais", "Bayawan"],
-      districts: ["North District", "West District"],
-      barangays: ["Barangay Calindagan", "Barangay Daro", "Barangay Banilad", "Barangay Tinago"]
-    },
-    "Davao": {
-      cities: ["Davao City", "Panabo"],
-      districts: ["Talomo", "Buhangin"],
-      barangays: ["Barangay 5-A", "Barangay 9-A", "Barangay Mintal", "Barangay Ma-a"]
-    },
-    "Roxas": {
-      cities: ["Roxas City"],
-      districts: ["Pueblo", "Lawa-an"],
-      barangays: ["Barangay Lawaan", "Barangay Inzo", "Barangay Tiza", "Barangay Tanque"]
-    },
-    "Eastern Visayas": {
-      cities: ["Tacloban", "Ormoc"],
-      districts: ["Downtown", "San Jose"],
-      barangays: ["Barangay Abucay", "Barangay Basper", "Barangay 88", "Barangay 75"]
-    }
-  };
-
-  document.getElementById("province").addEventListener("change", function () {
-    const province = this.value;
-    const citySelect = document.getElementById("city");
-    const districtSelect = document.getElementById("district");
-    const barangaySelect = document.getElementById("barangay");
-  
-    // Clear previous options
-    citySelect.innerHTML = "<option value=''>-- Select City / Municipality --</option>";
-    districtSelect.innerHTML = "<option value=''>-- Select District --</option>";
-    barangaySelect.innerHTML = "<option value=''>-- Select Barangay --</option>";
-  
-    if (data[province]) {
-      data[province].cities.forEach(city => {
-        citySelect.innerHTML += `<option value="${city}">${city}</option>`;
-      });
-  
-      data[province].districts.forEach(district => {
-        districtSelect.innerHTML += `<option value="${district}">${district}</option>`;
-      });
-  
-      data[province].barangays.forEach(barangay => {
-        barangaySelect.innerHTML += `<option value="${barangay}">${barangay}</option>`;
-      });
-    }
-  });
-
-  
  //Profile Upload Script
     const fileInput = document.getElementById('fileInput');
     const profileImage = document.getElementById('profileImage');
@@ -299,3 +334,124 @@ const data = {
       fileInput.value = '';
       profileImage.src = defaultImage;
     });
+
+async function loadAddressData() {
+    try {
+        // Load regions
+        const regionResponse = await fetch('json/refregion.json');
+        const regionData = await regionResponse.json();
+        
+        // Load provinces
+        const provinceResponse = await fetch('json/refprovince.json');
+        const provinceData = await provinceResponse.json();
+        
+        // Load cities/municipalities
+        const cityResponse = await fetch('json/refcitymun.json');
+        const cityData = await cityResponse.json();
+        
+        // Load barangays
+        const brgyResponse = await fetch('json/refbrgy.json');
+        const brgyData = await brgyResponse.json();
+
+        // Store data globally
+        window.addressData = {
+            regions: regionData.RECORDS,
+            provinces: provinceData.RECORDS,
+            cities: cityData.RECORDS,
+            barangays: brgyData.RECORDS
+        };
+
+        // Initialize dropdowns
+        populateRegions();
+        setupAddressEventListeners();
+    } catch (error) {
+        console.error('Error loading address data:', error);
+    }
+}
+
+function populateRegions() {
+    const regionSelect = document.getElementById('region');
+    if (!regionSelect) return;
+    
+    regionSelect.innerHTML = '<option value="">-- Select Region --</option>';
+    
+    window.addressData.regions.forEach(region => {
+        regionSelect.innerHTML += `<option value="${region.regCode}">${region.regDesc}</option>`;
+    });
+}
+
+function populateProvinces(regionCode) {
+    const provinceSelect = document.getElementById('province');
+    if (!provinceSelect) return;
+    
+    provinceSelect.innerHTML = '<option value="">-- Select Province --</option>';
+    
+    // Filter provinces by region code
+    const provinces = window.addressData.provinces.filter(province => province.regCode === regionCode);
+    
+    provinces.forEach(province => {
+        provinceSelect.innerHTML += `<option value="${province.provCode}">${province.provDesc}</option>`;
+    });
+}
+
+function populateCities(provinceCode) {
+    const citySelect = document.getElementById('city');
+    if (!citySelect) return;
+    
+    citySelect.innerHTML = '<option value="">-- Select City/Municipality --</option>';
+    
+    const cities = window.addressData.cities.filter(city => city.provCode === provinceCode);
+    
+    cities.forEach(city => {
+        citySelect.innerHTML += `<option value="${city.citymunCode}">${city.citymunDesc}</option>`;
+    });
+}
+
+function populateBarangays(cityCode) {
+    const barangaySelect = document.getElementById('barangay');
+    if (!barangaySelect) return;
+    
+    barangaySelect.innerHTML = '<option value="">-- Select Barangay --</option>';
+    
+    const barangays = window.addressData.barangays.filter(brgy => brgy.citymunCode === cityCode);
+    
+    barangays.forEach(brgy => {
+        barangaySelect.innerHTML += `<option value="${brgy.brgyCode}">${brgy.brgyDesc}</option>`;
+    });
+}
+
+function setupAddressEventListeners() {
+    const regionSelect = document.getElementById('region');
+    const provinceSelect = document.getElementById('province');
+    const citySelect = document.getElementById('city');
+
+    if (regionSelect) {
+        regionSelect.addEventListener('change', function() {
+            const selectedRegion = this.value;
+            populateProvinces(selectedRegion);
+            clearSelect(document.getElementById('city'));
+            clearSelect(document.getElementById('barangay'));
+        });
+    }
+
+    if (provinceSelect) {
+        provinceSelect.addEventListener('change', function() {
+            const selectedProvince = this.value;
+            populateCities(selectedProvince);
+            clearSelect(document.getElementById('barangay'));
+        });
+    }
+
+    if (citySelect) {
+        citySelect.addEventListener('change', function() {
+            const selectedCity = this.value;
+            populateBarangays(selectedCity);
+        });
+    }
+}
+
+function clearSelect(selectElement) {
+    if (selectElement) {
+        selectElement.innerHTML = '<option value="">-- Select --</option>';
+    }
+}
