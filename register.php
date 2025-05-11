@@ -30,7 +30,17 @@ session_start();
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
-    else{
+
+    // Check if the user already exists
+    $checkStmt = $conn->prepare("SELECT * FROM users WHERE email = ? OR username = ?");
+    $checkStmt->bind_param("ss", $email, $username);
+    $checkStmt->execute();
+    $result = $checkStmt->get_result();
+
+    if ($result->num_rows > 0) {
+        echo "User already exists";
+
+    }else{
         $stmt = $conn->prepare("INSERT INTO users (lastname, firstname, middlename, suffix, email, age, phone, street, region, province, city, barangay, username, password, emergency_name, relationship, emergency_number) 
                 values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         $stmt->bind_param("sssssiisssssssssi",  $lastname, $firstname, $middlename, $suffix, $email, $age, $phone, $street, $region, $province, $city, $barangay, $username, $password, $emergencyName, $relationship, $emergencyNumber);
