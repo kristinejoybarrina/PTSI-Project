@@ -38,7 +38,6 @@ session_start();
     $result = $checkStmt->get_result();
 
     if ($result->num_rows > 0) {
-        echo "User already exists";
         header("Location: registration.html?error=user_exists"); // Redirect to the registration form
         exit(); 
 
