@@ -32,7 +32,7 @@ session_start();
     else{
         $stmt = $conn->prepare("INSERT INTO users (lastname, firstname, middlename, suffix, email, age, phone, street, region, province, city, barangay, username, password, emergency_name, relationship, emergency_number) 
                 values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("sssssiisssssssssi",  $lastname, $firstname, $middlename, $suffix, $email, $username, $age, $phone, $street, $region, $province, $city, $barangay, $username, $password, $emergencyName, $relationship, $emergencyNumber);
+        $stmt->bind_param("sssssiisssssssssi",  $lastname, $firstname, $middlename, $suffix, $email, $age, $phone, $street, $region, $province, $city, $barangay, $username, $password, $emergencyName, $relationship, $emergencyNumber);
         $stmt->execute();
         echo "Registration successful";
         $stmt->close();
