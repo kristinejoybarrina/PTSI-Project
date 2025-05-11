@@ -455,3 +455,14 @@ function clearSelect(selectElement) {
         selectElement.innerHTML = '<option value="">-- Select --</option>';
     }
 }
+
+function checkUserError() {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('error') === 'user_exists') {
+        alert("User already exists!");
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    checkUserError();
+});
