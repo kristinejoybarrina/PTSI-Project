@@ -26,9 +26,6 @@ $stmt->bind_param("ss", $username, $password);
 $stmt->execute();
 $result = $stmt->get_result();
 
-
-$result = $stmt->get_result();
-
 if ($result->num_rows > 0) {
     // User found, set session variables
     $row = $result->fetch_assoc();
