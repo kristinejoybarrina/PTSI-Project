@@ -16,7 +16,7 @@ session_start();
     $city = $_POST['city'];
     $barangay = $_POST['barangay'];
     $username = $_POST['username'];
-    $password = $POST['password'];
+    $password = $_POST['password'];
     $confirmPassword = $_POST['confirmPassword'];
     $emergencyName = $_POST['emergencyName'];
     $relationship = $_POST['relationship'];
