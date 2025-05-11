@@ -39,6 +39,8 @@ session_start();
 
     if ($result->num_rows > 0) {
         echo "User already exists";
+        header("Location: registration.html"); // Redirect to the registration form
+        exit(); 
 
     }else{
         $stmt = $conn->prepare("INSERT INTO users (lastname, firstname, middlename, suffix, email, age, phone, street, region, province, city, barangay, username, password, emergency_name, relationship, emergency_number) 
