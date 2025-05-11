@@ -34,7 +34,7 @@ session_start();
                 values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         $stmt->bind_param("ssssssiisssssissi",  $lastname, $firstname, $middlename, $suffix, $email, $username, $age, $phone, $street, $province, $city, $district, $barangay, $postal,  $password, $emergencyName, $emergencyNumber);
         $stmt->execute();
-        echo "Registration successful"
+        echo "Registration successful";
         $stmt->close();
         $conn->close();
     }
