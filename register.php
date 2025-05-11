@@ -1,22 +1,25 @@
 <?php
+// Start the session
+session_start();
+
     // Collect form data
     $lastname = $_POST['lastname'];
     $firstname = $_POST['firstname'];
     $middlename = $_POST['middlename'];
     $suffix = $_POST['suffix'];
     $email = $_POST['email'];
-    $username = $_POST['username'];
     $age = $_POST['age'];
     $phone = $_POST['phone'];
     $street = $_POST['street'];
+    $region = $_POST['region'];
     $province = $_POST['province'];
     $city = $_POST['city'];
-    $district = $_POST['district'];
     $barangay = $_POST['barangay'];
-    $postal = $_POST['postal'];
+    $username = $_POST['username'];
     $password = $POST['password'];
-    //$confirmPassword = $_POST['confirmPassword'];
-    $emergencyName = $_POST['emergencyName']
+    $confirmPassword = $_POST['confirmPassword'];
+    $emergencyName = $_POST['emergencyName'];
+    $relationship = $_POST['relationship'];
     $emergencyNumber = $_POST['emergencyNumber'];
     
     // Create connection
@@ -29,7 +32,7 @@
     else{
         $stmt = $conn->prepare("insert into users (lastname, firstname, middlename, suffix, email, username, age, phone, street, province, city, district, barangay, postal, regPassword, emergencyName, emergencyNumber) 
                 values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("ssssssiisssssissi",  $lastname, $firstname, $middlename, $suffix, $email, $username, $age, $phone, $street, $province, $city, $district, $barangay, $postal $password, $emergencyName, $emergencyNumber);
+        $stmt->bind_param("ssssssiisssssissi",  $lastname, $firstname, $middlename, $suffix, $email, $username, $age, $phone, $street, $province, $city, $district, $barangay, $postal,  $password, $emergencyName, $emergencyNumber);
         $stmt->execute();
         echo "Registration successful"
         $stmt->close();
