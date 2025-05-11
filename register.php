@@ -3,24 +3,25 @@
 session_start();
 
     // Collect form data
-    $lastname = $_POST['lastname'];
-    $firstname = $_POST['firstname'];
-    $middlename = $_POST['middlename'];
-    $suffix = $_POST['suffix'];
-    $email = $_POST['email'];
-    $age = $_POST['age'];
-    $phone = $_POST['phone'];
-    $street = $_POST['street'];
-    $region = $_POST['region'];
-    $province = $_POST['province'];
-    $city = $_POST['city'];
-    $barangay = $_POST['barangay'];
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-    //$confirmPassword = $_POST['confirmPassword'];
-    $emergencyName = $_POST['emergencyName'];
-    $relationship = $_POST['relationship'];
-    $emergencyNumber = $_POST['emergencyNumber'];
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $lastname = $_POST['lastname'] ?? '';
+        $firstname = $_POST['firstname'] ?? '';
+        $middlename = $_POST['middlename'] ?? '';
+        $suffix = $_POST['suffix'] ?? '';
+        $email = $_POST['email'] ?? '';
+        $age = $_POST['age'] ?? '';
+        $phone = $_POST['phone'] ?? '';
+        $street = $_POST['street'] ?? '';
+        $region = $_POST['region'] ?? '';
+        $province = $_POST['province'] ?? '';
+        $city = $_POST['city'] ?? '';
+        $barangay = $_POST['barangay'] ?? '';
+        $username = $_POST['username'] ?? '';
+        $password = $_POST['password'] ?? '';
+        //$confirmPassword = $_POST['confirmPassword'];
+        $emergencyName = $_POST['emergencyName'] ?? '';
+        $relationship = $_POST['relationship'] ?? '';
+        $emergencyNumber = $_POST['emergencyNumber'] ?? '';
     
     // Create connection
     $conn = new mysqli("localhost", "root", "", "user_registration");
@@ -37,7 +38,7 @@ session_start();
         echo "Registration successful";
         $stmt->close();
         $conn->close();
-    }
+    }}
 
 ?>
 
