@@ -30,9 +30,9 @@ session_start();
         die("Connection failed: " . $conn->connect_error);
     }
     else{
-        $stmt = $conn->prepare("insert into users (lastname, firstname, middlename, suffix, email, username, age, phone, street, province, city, district, barangay, postal, regPassword, emergencyName, emergencyNumber) 
+        $stmt = $conn->prepare("insert into users (lastname, firstname, middlename, suffix, email, username, age, phone, street, province, city, barangay, postal, regPassword, emergencyName, emergencyNumber) 
                 values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("ssssssiisssssissi",  $lastname, $firstname, $middlename, $suffix, $email, $username, $age, $phone, $street, $province, $city, $district, $barangay, $postal,  $password, $emergencyName, $emergencyNumber);
+        $stmt->bind_param("ssssssiisssssissi",  $lastname, $firstname, $middlename, $suffix, $email, $username, $age, $phone, $street, $province, $city, $barangay, $postal,  $password, $emergencyName, $emergencyNumber);
         $stmt->execute();
         echo "Registration successful";
         $stmt->close();
