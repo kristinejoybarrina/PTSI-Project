@@ -42,12 +42,15 @@ session_start();
             if ($imageSize <= 2 * 1024 * 1024) {
                 $newImageName = uniqid('', true) . '.' . $imageExt;
                 $uploadPath = 'uploads/' . $newImageName;
+                
 
-                if (move_uploaded_file($imageTmpName, $uploadPath)) {
-                    $imagePath = $uploadPath; // Override only if upload successful
-                } else {
-                    echo "Failed to upload the image. Using default image.";
-                }
+                // Move this after registration success — do NOT move the file yet
+            $imageTempData = [
+                'tmp_name' => $imageTmpName,
+                'upload_path' => $uploadPath
+            ];
+            $imagePath = $uploadPath; // Save intended path
+
             } else {
                 echo "Image size is too large. Maximum size is 2MB. Using default image.";
             }
@@ -83,6 +86,16 @@ session_start();
         $stmt->bind_param("sssssisisssssssssis",  $lastname, $firstname, $middlename, $suffix, $email, $age, $gender, $phone, $street, $region, $province, $city, $barangay, $username, $password, $emergencyName, $relationship, $emergencyNumber, $imagePath);
         $stmt->execute();
         echo "Registration successful";
+
+        //Upload the image only if the registration is successful
+        if (!empty($imageTempData)) {
+            if (!move_uploaded_file($imageTempData['tmp_name'], $imageTempData['upload_path'])) {
+                // Fallback if upload failed
+                $imagePath = 'img/BG.png';
+                echo " Image upload failed, using default image.";
+            }
+        }
+
         $stmt->close();
         $conn->close();
     }}
