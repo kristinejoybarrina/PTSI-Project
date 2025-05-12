@@ -57,8 +57,7 @@ session_start();
         } else {
             echo "Invalid image type. Only JPG, PNG, and GIF are allowed. Using default image.";
         }
-   
-
+    }
     // Create connection
     $conn = new mysqli("localhost", "root", "", "user_registration");
 
