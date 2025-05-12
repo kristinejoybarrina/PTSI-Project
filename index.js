@@ -281,6 +281,7 @@ document.addEventListener('DOMContentLoaded', function() {
         confirmPasswordInput.setCustomValidity(passwordRequirements.match ? '' : 'Passwords do not match');
     }
 
+
     // Add blur event listeners to mark fields as touched
     if (passwordInput) {
         passwordInput.addEventListener('blur', function() {
@@ -466,3 +467,6 @@ function checkUserError() {
 document.addEventListener('DOMContentLoaded', function() {
     checkUserError();
 });
+
+
+

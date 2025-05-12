@@ -26,6 +26,7 @@ $stmt->bind_param("ss", $username, $password);
 $stmt->execute();
 $result = $stmt->get_result();
 
+// Check if theuser exists
 if ($result->num_rows > 0) {
     // User found, set session variables
     $row = $result->fetch_assoc();
@@ -37,7 +38,8 @@ if ($result->num_rows > 0) {
     echo "Login successful";
 } else {
     // Invalid credentials
-    echo "Invalid username or password";
+    header("Location:login.html?error=invalid");
+    exit();
 
 }
     // Close the connection
