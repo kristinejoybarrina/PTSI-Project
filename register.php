@@ -25,7 +25,7 @@ session_start();
 
 
     // Default image path in case no image is uploaded
-    $imagePath = 'img/BG.png';
+    $imagePath = 'img/noprofil.jpg';
 
     // Handle image upload
     if (isset($_FILES['image']) && $_FILES['image']['error'] === 0) {
@@ -57,10 +57,7 @@ session_start();
         } else {
             echo "Invalid image type. Only JPG, PNG, and GIF are allowed. Using default image.";
         }
-    } else {
-        echo "No image uploaded or there was an upload error. Using default image.";
-    }
-
+   
 
     // Create connection
     $conn = new mysqli("localhost", "root", "", "user_registration");
@@ -85,7 +82,14 @@ session_start();
                 values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         $stmt->bind_param("sssssisisssssssssis",  $lastname, $firstname, $middlename, $suffix, $email, $age, $gender, $phone, $street, $region, $province, $city, $barangay, $username, $password, $emergencyName, $relationship, $emergencyNumber, $imagePath);
         $stmt->execute();
-        echo "Registration successful";
+        echo "    
+            <div style='display:flex;justify-content:center;align-items:center;height:100vh;background:#f9f9f9'>
+                <div style='text-align:center;padding:50px 80px;#000;border-radius:12px;background:#fff;box-shadow:0 4px 12px rgba(0,0,0,0.1)'>
+                    <div style='font-size:80px;color:#0c0'>&#10003;</div>
+                    <div style='font:700 24px \"Source Serif Pro\",serif;color:#333'>Registration successful.</div>
+                </div>
+            </div>
+            ";
 
         //Upload the image only if the registration is successful
         if (!empty($imageTempData)) {
