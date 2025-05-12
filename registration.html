@@ -10,6 +10,7 @@
 </head>
 <body>
   <div>
+    <form action="register.php" method="POST" enctype="multipart/form-data">
     <img src="img/BG.png" alt="Philippine Tuberculosis Society Inc." id="login-bg">
     <!-- Profile Upload Section -->
     <div class="signup-container" id="signupContainer">
@@ -19,7 +20,7 @@
       <div class="upload">
         <img src="img/noprofil.jpg" alt="Profile Picture" id="profileImage" height="150" style="border-radius: 50%; border: 2px solid #ccc;">
         <div class="round">
-          <input type="file" id="fileInput" accept="image/*">
+          <input type="file" id="fileInput" name="image" accept="image/*">
           <i class="fa fa-camera"></i>
         </div>
         <button id="updateBtn">Update</button>
@@ -28,7 +29,7 @@
 
     <!-- Registration Form Section -->
       <h1>Personal Information</h1>
-      <form action="register.php" method="POST">
+
         <div class="form-row">
           <div style="flex: 1;">
             <label for="lastname">Last Name</label>

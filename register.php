@@ -10,6 +10,7 @@ session_start();
         $suffix = $_POST['suffix'] ?? '';
         $email = $_POST['email'] ?? '';
         $age = $_POST['age'] ?? '';
+        $gender = $_POST['gender'] ?? '';
         $phone = $_POST['phone'] ?? '';
         $street = $_POST['street'] ?? '';
         $region = $_POST['region'] ?? '';
@@ -18,11 +19,46 @@ session_start();
         $barangay = $_POST['barangay'] ?? '';
         $username = $_POST['username'] ?? '';
         $password = $_POST['password'] ?? '';
-        //$confirmPassword = $_POST['confirmPassword'];
         $emergencyName = $_POST['emergencyName'] ?? '';
         $relationship = $_POST['relationship'] ?? '';
         $emergencyNumber = $_POST['emergencyNumber'] ?? '';
-    
+
+
+    // Default image path in case no image is uploaded
+    $imagePath = 'img/BG.png';
+
+    // Handle image upload
+    if (isset($_FILES['image']) && $_FILES['image']['error'] === 0) {
+        $imageName = $_FILES['image']['name'];
+        $imageTmpName = $_FILES['image']['tmp_name'];
+        $imageSize = $_FILES['image']['size'];
+        $imageError = $_FILES['image']['error'];
+
+        // Define allowed file types
+        $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+        $imageExt = strtolower(pathinfo($imageName, PATHINFO_EXTENSION));
+
+        if (in_array($imageExt, ['jpg', 'jpeg', 'png', 'gif'])) {
+            if ($imageSize <= 2 * 1024 * 1024) {
+                $newImageName = uniqid('', true) . '.' . $imageExt;
+                $uploadPath = 'uploads/' . $newImageName;
+
+                if (move_uploaded_file($imageTmpName, $uploadPath)) {
+                    $imagePath = $uploadPath; // Override only if upload successful
+                } else {
+                    echo "Failed to upload the image. Using default image.";
+                }
+            } else {
+                echo "Image size is too large. Maximum size is 2MB. Using default image.";
+            }
+        } else {
+            echo "Invalid image type. Only JPG, PNG, and GIF are allowed. Using default image.";
+        }
+    } else {
+        echo "No image uploaded or there was an upload error. Using default image.";
+    }
+
+
     // Create connection
     $conn = new mysqli("localhost", "root", "", "user_registration");
 
@@ -32,7 +68,7 @@ session_start();
     }
 
     // Check if the user already exists
-    $checkStmt = $conn->prepare("SELECT * FROM users WHERE email = ? OR username = ?");
+    $checkStmt = $conn->prepare("SELECT * FROM users_info WHERE email = ? OR username = ?");
     $checkStmt->bind_param("ss", $email, $username);
     $checkStmt->execute();
     $result = $checkStmt->get_result();
@@ -42,9 +78,9 @@ session_start();
         exit(); 
 
     }else{
-        $stmt = $conn->prepare("INSERT INTO users (lastname, firstname, middlename, suffix, email, age, phone, street, region, province, city, barangay, username, password, emergency_name, relationship, emergency_number) 
-                values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("sssssiisssssssssi",  $lastname, $firstname, $middlename, $suffix, $email, $age, $phone, $street, $region, $province, $city, $barangay, $username, $password, $emergencyName, $relationship, $emergencyNumber);
+        $stmt = $conn->prepare("INSERT INTO users_info (lastname, firstname, middlename, suffix, email, age, gender, phone, street, region, province, city, barangay, username, password, emergencyName, relationship, emergencyNumber, image_path) 
+                values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("sssssisisssssssssis",  $lastname, $firstname, $middlename, $suffix, $email, $age, $gender, $phone, $street, $region, $province, $city, $barangay, $username, $password, $emergencyName, $relationship, $emergencyNumber, $imagePath);
         $stmt->execute();
         echo "Registration successful";
         $stmt->close();
