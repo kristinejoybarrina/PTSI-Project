@@ -16,7 +16,7 @@ if ($conn->connect_error){
     die("Connection failed". $conn->connect_error);
 }
 
-$query = "SELECT * FROM users WHERE username = ? AND password = ?";
+$query = "SELECT * FROM users_info WHERE username = ? AND password = ?";
 $stmt = $conn->prepare($query);
 
 // Bind the parameters
