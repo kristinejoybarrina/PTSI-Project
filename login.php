@@ -35,7 +35,15 @@ if ($result->num_rows > 0) {
     $_SESSION['email'] = $row['email'];
 
     // Redirect to the welcome page
-    echo "Login successful";
+    echo "
+    <div style='display:flex;justify-content:center;align-items:center;height:100vh;background:#f9f9f9'>
+      <div style='text-align:center;padding:50px 80px;#000;border-radius:12px;background:#fff;box-shadow:0 4px 12px rgba(0,0,0,0.1)'>
+        <div style='font-size:80px;color:#0c0'>&#10003;</div>
+        <div style='font:700 24px \"Source Serif Pro\",serif;color:#333'>Logged in successfully.</div>
+      </div>
+    </div>
+    ";
+
 } else {
     // Invalid credentials
     header("Location:login.html?error=invalid");
