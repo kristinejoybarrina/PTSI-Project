@@ -25,6 +25,19 @@ function validateLoginForm(event) {
     return true;
 }
 
+document.querySelectorAll('input[name="firstname"], input[name="lastname"], input[name="middlename"], input[name="emergencyName"], input[name="relationship"]').forEach(input => {
+    input.addEventListener('input', function () {
+      this.value = this.value.replace(/[^a-zA-Z\s]/g, '');
+    });
+  });
+
+// Restrict phone/contact fields to numbers only
+document.querySelectorAll('input[name="phone"], input[name="emergencyNumber"]').forEach(input => {
+input.addEventListener('input', function () {
+    this.value = this.value.replace(/[^\d]/g, '');
+});
+});
+
 // Function to validate phone number format (Philippine format)
 function validatePhoneNumber(phone) {
     const phoneRegex = /^(09|\+639)\d{9}$/;
