@@ -1,58 +1,52 @@
 <?php
-// Start the session
 session_start();
+header('Content-Type: application/json');
 
+// Check request method
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'] ?? '';
     $password = $_POST['password'] ?? '';
 
+    $conn = new mysqli("sql202.infinityfree.com", "if0_39135099", "Wmsregistration", "if0_39135099_user_registration");
 
+    if ($conn->connect_error) {
+        echo json_encode([
+            'success' => false,
+            'message' => 'Database connection failed: ' . $conn->connect_error
+        ]);
+        exit;
+    }
 
-// Connect to the database
-$conn = new mysqli("localhost", "root", "", "user_registration");
+    $stmt = $conn->prepare("SELECT * FROM users_info WHERE username = ?");
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-// Connection failed
-if ($conn->connect_error){
-    die("Connection failed". $conn->connect_error);
-}
+    if ($result->num_rows === 1) {
+        $user = $result->fetch_assoc();
 
-$query = "SELECT * FROM users_info WHERE username = ? AND password = ?";
-$stmt = $conn->prepare($query);
+        // THIS IS CRUCIAL
+        if (password_verify($password, $user['password'])) {
+            $_SESSION['user'] = $user;
+            echo json_encode([
+                'success' => true,
+                'message' => 'Login successful.'
+            ]);
+        } else {
+            echo json_encode([
+                'success' => false,
+                'message' => 'Invalid password.'
+            ]);
+        }
+    } else {
+        echo json_encode([
+            'success' => false,
+            'message' => 'User not found.'
+        ]);
+    }
 
-// Bind the parameters
-$stmt->bind_param("ss", $username, $password);
-
-// Execute the query
-$stmt->execute();
-$result = $stmt->get_result();
-
-// Check if theuser exists
-if ($result->num_rows > 0) {
-    // User found, set session variables
-    $row = $result->fetch_assoc();
-    $_SESSION['user_id'] = $row['id'];
-    $_SESSION['username'] = $row['username'];
-    $_SESSION['email'] = $row['email'];
-
-    // Redirect to the welcome page
-    echo "
-    <div style='display:flex;justify-content:center;align-items:center;height:100vh;background:#f9f9f9'>
-      <div style='text-align:center;padding:50px 80px;#000;border-radius:12px;background:#fff;box-shadow:0 4px 12px rgba(0,0,0,0.1)'>
-        <div style='font-size:80px;color:#0c0'>&#10003;</div>
-        <div style='font:700 24px \"Source Serif Pro\",serif;color:#333'>Logged in successfully.</div>
-      </div>
-    </div>
-    ";
-
-} else {
-    // Invalid credentials
-    header("Location:login.html?error=invalid");
-    exit();
-
-}
-    // Close the connection
     $stmt->close();
     $conn->close();
-
 }
 ?>
+

@@ -1,3 +1,9 @@
+let recorder_opt = {}; // Define the variable
+
+window.onbeforeunload = function () {
+  console.log('Recorder options:', recorder_opt);
+};
+
 // Function to toggle between login and registration forms
 function toggleForms() {
     const loginContainer = document.getElementById('loginContainer');
@@ -326,23 +332,29 @@ document.addEventListener('DOMContentLoaded', function() {
     const removeBtn = document.getElementById('removeBtn');
     const defaultImage = 'img/noprofil.jpg';
   
-    // Show file preview on file change
-    fileInput.addEventListener('change', function () {
-      const file = this.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = function (e) {
-          profileImage.src = e.target.result;
-        };
-        reader.readAsDataURL(file);
-      }
+    document.addEventListener('DOMContentLoaded', () => {
+        // Handle login form submission
+        const loginForm = document.getElementById('loginForm');
+        if (loginForm) {
+            loginForm.addEventListener('submit', handleLogin);
+        } else {
+            console.error('Element with ID "loginForm" not found.');
+        }
+    
+        // Handle update button and file input logic
+        const updateBtn = document.getElementById('updateBtn'); // Ensure the element exists
+        const fileInput = document.getElementById('fileInput'); // Ensure fileInput exists
+    
+        if (updateBtn && fileInput) {
+            updateBtn.addEventListener('click', function () {
+                fileInput.click(); // Trigger file input when update button is clicked
+            });
+        } else {
+            console.error('Element with ID "updateBtn" or "fileInput" not found.');
+        }
     });
-  
-    // Trigger file input when update button is clicked
-    updateBtn.addEventListener('click', function () {
-      fileInput.click();
-    });
-  
+    
+    
     // Reset to default image
     removeBtn.addEventListener('click', function () {
       fileInput.value = '';
@@ -481,5 +493,97 @@ document.addEventListener('DOMContentLoaded', function() {
     checkUserError();
 });
 
+// AJAX CONNECTION - LOGIN//
+document.addEventListener('DOMContentLoaded', () => {
+    const loginForm = document.getElementById('loginForm');
+    if (loginForm) {
+      loginForm.addEventListener('submit', handleLogin);
+    } else {
+      console.error('Element with ID "loginForm" not found.');
+    }
+  });
+  
+  function handleLogin(event) {
+    event.preventDefault(); // Prevent form submission
+  
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+  
+    console.log('Sending AJAX request...');
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', 'login.php', true); // Replace 'login.php' with your server-side script
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  
+    xhr.onreadystatechange = function () {
+      console.log('AJAX readyState:', xhr.readyState);
+      if (xhr.readyState === 4) {
+        console.log('AJAX status:', xhr.status);
+        if (xhr.status === 200) {
+          console.log('Response:', xhr.responseText);
+          const response = JSON.parse(xhr.responseText);
+          const responseMessage = document.getElementById('responseMessage');
+          if (response.success) {
+            responseMessage.textContent = 'Login successful!';
+            responseMessage.style.color = 'green';
+          } else {
+            responseMessage.textContent = 'Login failed: ' + response.message;
+            responseMessage.style.color = 'red';
+          }
+        } else {
+          console.error('Error: AJAX request failed.');
+        }
+      }
+    };
+  
+    const data = `username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`;
+    console.log('Data sent:', data);
+    xhr.send(data);
+  }
+  document.getElementById('registrationForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+  
+    const form = document.getElementById('registrationForm');
+    const formData = new FormData(form); // Includes image and other fields
+  
+    fetch('register.php', {
+      method: 'POST',
+      body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+      alert(data.message);
+      if (data.success) {
+        window.location.href = 'index.html'; // Redirect if successful
+      }
+    })
+    .catch(error => {
+      console.error('Registration error:', error);
+      alert('An error occurred during registration.');
+    });
+  });
 
+  document.getElementById('fileInput').addEventListener('change', function () {
+    const file = this.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        document.getElementById('profileImage').src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  });
 
+  document.getElementById('fileInput').addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    const preview = document.getElementById('profileImage'); // ✅ Correct ID
+
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            preview.src = e.target.result;
+        }
+        reader.readAsDataURL(file);
+    } else {
+        preview.src = 'img/noprofil.jpg'; // fallback
+    }
+});

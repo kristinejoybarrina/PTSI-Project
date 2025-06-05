@@ -16,15 +16,12 @@
                 <img src="img/PTSILogo.png" alt="Philippine Tuberculosis Society Inc. Logo" id="PTSI-logo">
                 <h1 class="login-text">Patient's Login</h1>
             </div>
-            <form action="login.php" method="POST">
-                <label for="username"></label>
+            <form id="loginForm">
                 <input type="text" id="username" name="username" placeholder="Username" required>
-            
-                <label for="password"></label>
                 <input type="password" id="password" name="password" placeholder="Password" required>
-            
                 <button type="submit">Login</button>
             </form>
+            <p id="responseMessage" style="margin-top: 10px;"></p>
             <p>Don't have an account? <a href="registration.html">Register Here.</a></p>
           </div>
 
