@@ -31,50 +31,43 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $imagePath = 'img/BG.png';
 =======
     // Default image path in case no image is uploaded
-    $imagePath = 'img/noprofil.jpg';
->>>>>>> 663d2714626619377fa081da0d602c548fb18399
+    $imagePath = 'img/BG.png';
 
     // Handle image upload
     if (isset($_FILES['image']) && $_FILES['image']['error'] === 0) {
-        $image = $_FILES['image']['name'];
-        $imageFileType = strtolower(pathinfo($image, PATHINFO_EXTENSION));
-        $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+        $imageName = $_FILES['image']['name'];
+        $imageTmpName = $_FILES['image']['tmp_name'];
+        $imageSize = $_FILES['image']['size'];
+        $imageError = $_FILES['image']['error'];
 
-        if (!in_array($imageFileType, $allowedExtensions)) {
-            echo json_encode([
-                "success" => false,
-                "message" => "Only JPG, JPEG, PNG, and GIF files are allowed."
-            ]);
-            exit();
+        // Define allowed file types
+        $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+        $imageExt = strtolower(pathinfo($imageName, PATHINFO_EXTENSION));
+
+        if (in_array($imageExt, ['jpg', 'jpeg', 'png', 'gif'])) {
+            if ($imageSize <= 2 * 1024 * 1024) {
+                $newImageName = uniqid('', true) . '.' . $imageExt;
+                $uploadPath = 'uploads/' . $newImageName;
+                
+
+                // Move this after registration success — do NOT move the file yet
+            $imageTempData = [
+                'tmp_name' => $imageTmpName,
+                'upload_path' => $uploadPath
+            ];
+            $imagePath = $uploadPath; // Save intended path
+
+            } else {
+                echo "Image size is too large. Maximum size is 2MB. Using default image.";
+            }
+        } else {
+            echo "Invalid image type. Only JPG, PNG, and GIF are allowed. Using default image.";
         }
-<<<<<<< HEAD
-
-        if ($_FILES['image']['size'] > 2 * 1024 * 1024) {
-            echo json_encode([
-                "success" => false,
-                "message" => "Image size is too large. Maximum is 2MB."
-            ]);
-            exit();
-        }
-
-        $newImageName = uniqid('', true) . '.' . $imageFileType;
-        $target = "uploads/" . $newImageName;
-
-        if (!move_uploaded_file($_FILES['image']['tmp_name'], $target)) {
-            echo json_encode([
-                "success" => false,
-                "message" => "Failed to upload the image."
-            ]);
-            exit();
-        }
-
-        // Image upload successful
-        $imagePath = $target;
+    } else {
+        echo "No image uploaded or there was an upload error. Using default image.";
     }
 
-=======
-    }
->>>>>>> 663d2714626619377fa081da0d602c548fb18399
+
     // Create connection
     $conn = new mysqli("sql202.infinityfree.com", "if0_39135099", "Wmsregistration", "if0_39135099_user_registration");
 
