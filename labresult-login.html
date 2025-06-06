@@ -15,10 +15,10 @@
             <h2>PTSI</h2>
         </div>
         <ul class="menu">
-        <h3>Menu</h3>
-        <li id="dashboard"><i class="icon"><img src="img/dash-icon.png"></i><h3>Dashboard</h3></li>
-        <li id="lab-result"><i class="icon"><img src="img/lab-result-icon.png"></i><h3>Lab Result</h3></li>
-        <li id="appointment"><i class="icon"><img src="img/appointment-icon.png"></i><h3>Appointment</h3></li>
+            <h3>Menu</h3>
+            <li id="dashboard"><i class="icon"><img src="img/dash-icon.png"></i><h3>Dashboard</h3></li>
+            <li id="lab-result"><i class="icon"><img src="img/lab-result-icon.png"></i><h3>Lab Result</h3></li>
+            <li id="appointment"><i class="icon"><img src="img/appointment-icon.png"></i><h3>Appointment</h3></li>
         </ul>
         <div class="logout" id="logout">
             <img src="img/logout-icon.png" alt="Logout Icon">
@@ -28,11 +28,23 @@
 
     <div class="main-content">
         <div class="header">
-        <div><strong>Laboratory Results</strong></div>
-        <div class="header-icons">
-            <span><img src="/img/notif-icon.png"></span>
-            <span><img src="/img/profile-icon.png"></span>
+            <div><strong>Laboratory Results</strong></div>
+            <div class="header-icons">
+                <span id="notificationBell" class="notification-bell">
+                    <img src="img/notif-icon.png" alt="Notification Icon">
+                </span>
+                <span><img src="img/profile-icon.png" alt="Profile Icon"></span>
+            </div>
         </div>
+
+        <div id="notificationDropdown" class="notification-dropdown">
+            <div class="notification-header">
+                <h3>Notifications</h3>
+            </div>
+            <div id="notificationItems" class="notification-items"></div>
+            <div class="all-notifications-link-container">
+                <a href="#" class="all-notifications-link">See all</a>
+            </div>
         </div>
 
         <div class="dashboard">
@@ -52,7 +64,7 @@
                 <p>2. Look for the laboratory code indicated in the receipt.</p>
                 <p>3. Copy the code and enter it to the laboratory verification.</p>
                 <p>4. Click verify button.</p>
-                <p>5. Finally, you can finally download the laboratory result.</p>
+                <p>5. Finally, you can download the laboratory result.</p>
             </div>
             <div id="right-instruction">
                 <h3>Panuto</h3>
