@@ -88,17 +88,17 @@ body {
   
   /* Logout */
   
-  .logout {
-    margin-top: 350px;
-    display: flex;
-    align-items: center;
-    color: #ccc;
-    cursor: pointer;
-    gap: 10px;
-    padding: 5px;
-    border-radius: 5px;
-    transition: background-color 0.2s ease, color 0.2s ease;
-  }
+.logout {
+  margin-top: 300px;
+  display: flex;
+  align-items: center;
+  color: #ccc;
+  cursor: pointer;
+  gap: 10px;
+  padding: 5px;
+  border-radius: 5px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
   
   .logout img {
     width: 24px;
