@@ -158,9 +158,9 @@ h2 {
 }
 
 .step-box {
-  margin-top: 50px;
+  margin-top: 20px;
   background-color: white;
-  padding: 2rem;
+  padding: 1rem;
   border: 1px solid #ccc;
   border-radius: 10px;
   text-align: center;
@@ -177,10 +177,10 @@ h2 {
 .appointment-form {
   display: flex;
   justify-content: center;
-  gap: 10rem;
+  gap: 5rem;
   margin-top: 1rem;
   flex-wrap: wrap;
-  align-items: flex-end;  
+  align-items: flex-start;  
 }
 
 .form-group {
@@ -210,7 +210,9 @@ button {
 }
 
 .form-footer {
-  margin-top: 1rem;
-  text-align: center;
-  margin-left: 600px;
+  text-align: right;  /* para ang button naka-right align sa container */
+  margin-top: -0.9rem;   /* space sa taas para may gap mula sa inputs */
+  margin-left: auto;  /* para mag-push sa right */
+  width: 100%;        /* para kunin buong lapad ng parent */
+  max-width: 500px;
 }
