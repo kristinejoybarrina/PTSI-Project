@@ -7,7 +7,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'] ?? '';
     $password = $_POST['password'] ?? '';
 
-    $conn = new mysqli("sql202.infinityfree.com", "if0_39135099", "Wmsregistration", "if0_39135099_user_registration");
+    $conn = new mysqli("localhost", "root", "", "user_registration");
 
     if ($conn->connect_error) {
         echo json_encode([

@@ -67,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Create connection
-    $conn = new mysqli("sql202.infinityfree.com", "if0_39135099", "Wmsregistration", "if0_39135099_user_registration");
+    $conn = new mysqli("localhost", "root", "", "user_registration");
 
     // Check connection
     if ($conn->connect_error) {

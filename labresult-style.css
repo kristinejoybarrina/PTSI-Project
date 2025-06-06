@@ -86,6 +86,16 @@ body {
   height: 24px;
 }
 
+.menu li.active {
+  background-color: #fdfeff;
+  color: black;
+}
+
+.menu li.active .icon {
+  filter: invert(1) brightness(0); 
+}
+
+
 /* Logout */
 
 .logout {
