@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Laboratory Results</title>
     <link rel="stylesheet" href="labresult-style.css">
     <link href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
@@ -22,47 +22,95 @@
         <div class="logout">
             <img src="/img/logout-icon.png" alt="Logout Icon">
             <h3>Logout</h3>
-        </div>
-        
+        </div>   
     </div>
 
     <div class="main-content">
         <div class="header">
-        <div><strong>Dashboard</strong></div>
+            <div><strong>Laboratory Results</strong></div>
         <div class="header-icons">
             <span><img src="/img/notif-icon.png"></span>
             <span><img src="/img/profile-icon.png"></span>
         </div>
-        </div>
+    </div>
     
-    <div class="dashboard">
-        <div class="dashboard-content">
-            <h3>Laboratory Verification</h3>
+    <div class="container">
+        <!-- Header Section -->
+        <h1 class="header-title">
+            Shin Ryujin
+        </h1>
+
+        <!-- Table Section -->
+        <div class="table-wrapper">
+            <table>
+                <thead class="table-header">
+                    <tr>
+                        <th class="table-header-cell">
+                            Document
+                        </th>
+                        <th class="table-header-cell">
+                            Date
+                        </th>
+                        <th class="table-header-cell">
+                            Type
+                        </th>
+                        <th class="table-header-cell">
+                            File
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="table-data-cell">
+                            #0017346
+                        </td>
+                        <td class="table-data-cell">
+                            05-05-2025
+                        </td>
+                        <td class="table-data-cell">
+                            TB Lab Results
+                        </td>
+                        <td class="table-data-cell">
+                            <a href="#" class="download-link">
+                                lab.pdf <i class="fas fa-download download-icon"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-data-cell">
+                            #0017347
+                        </td>
+                        <td class="table-data-cell">
+                            05-06-2025
+                        </td>
+                        <td class="table-data-cell">
+                            X-Ray Scan
+                        </td>
+                        <td class="table-data-cell">
+                            <a href="#" class="download-link">
+                                xray.png <i class="fas fa-download download-icon"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-data-cell">
+                            #0017348
+                        </td>
+                        <td class="table-data-cell">
+                            05-07-2025
+                        </td>
+                        <td class="table-data-cell">
+                            Consultation Notes
+                        </td>
+                        <td class="table-data-cell">
+                            <a href="#" class="download-link">
+                                notes.docx <i class="fas fa-download download-icon"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-        <form id="labresultCode">
-            <input type="text" id="labresult-code" name="code" placeholder="Enter your code here" required>
-            <button type="submit">Verify</button>
-        </form>
-          </div>
-          <div id="instruction-container">
-            <div id="left-instruction">
-                <h3>Instructions</h3>
-                <p>1. Check your receipt.</p>
-                <p>2. Look for the laboratory code indicated in the receipt.</p>
-                <p>3. Copy the code and enter it to the laboratory verification.</p>
-                <p>4. Click verify button.</p>
-                <p>5. Finally, you can finally download the laboratory result.</p>
-            </div>
-            <div id="right-instruction">
-                <h3>Panuto</h3>
-                <p>1. Tingnan ang resibo.</p>
-                <p>2. Hanapin ang "laboratory code" na nakalagay sa resibo.</p>
-                <p>3. Kopyahin ang code at ilagay sa loob ng laboratory verification.</p>
-                <p>4. Pindutin ang "verify".</p>
-                <p>5. Sa wakas, nakapaglogin ka na at maaari mo na i-download ang pdf file ng iyong result.</p>
-            </div>
     </div>
-    </div>
-  </div>
 </body>
 </html>
