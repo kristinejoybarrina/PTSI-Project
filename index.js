@@ -587,3 +587,4 @@ document.addEventListener('DOMContentLoaded', () => {
         preview.src = 'img/noprofil.jpg'; // fallback
     }
 });
+

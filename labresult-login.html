@@ -6,6 +6,7 @@
     <title>Laboratory Result</title>
     <link rel="stylesheet" href="labresult-login-style.css">
     <link href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="sidebar">
@@ -14,37 +15,51 @@
             <h2>PTSI</h2>
         </div>
         <ul class="menu">
-        <h3>Menu</h3>
-        <li><i class="icon"><img src="/img/dash-icon.png"></i><h3>Dashboard</h3></li>
-        <li><i class="icon"><img src="/img/lab-result-icon.png"></i><h3>Lab Result</h3></li>
-        <li><i class="icon"><img src="/img/appointment-icon.png"></i><h3>Appointment</h3></li>
+            <h3>Menu</h3>
+            <li><i class="icon"><img src="/img/dash-icon.png"></i><h3>Dashboard</h3></li>
+            <li><i class="icon"><img src="/img/lab-result-icon.png"></i><h3>Lab Result</h3></li>
+            <li><i class="icon"><img src="/img/appointment-icon.png"></i><h3>Appointment</h3></li>
         </ul>
         <div class="logout">
             <img src="/img/logout-icon.png" alt="Logout Icon">
             <h3>Logout</h3>
         </div>
-        
     </div>
 
     <div class="main-content">
         <div class="header">
-        <div><strong>Laboratory Results</strong></div>
-        <div class="header-icons">
-            <span><img src="/img/notif-icon.png"></span>
-            <span><img src="/img/profile-icon.png"></span>
+            <div><strong>Laboratory Results</strong></div>
+            <div class="header-icons">
+                <div id="notificationBell" class="notification-bell">
+                    <img src="/img/notif-icon.png" alt="Notification Bell">
+                </div>
+
+                <div id="notificationDropdown" class="notification-dropdown">
+                    <div class="notification-header">
+                        <h3>Notification</h3>
+                    </div>
+                    <div id="notificationItems" class="notification-items">
+                    </div>
+                    <div class="all-notifications-link-container">
+                        <a href="#" class="all-notifications-link">All Notification</a>
+                    </div>
+                </div>
+
+                <span><img src="/img/profile-icon.png"></span>
+            </div>
         </div>
+
+        <div class="dashboard">
+            <div class="dashboard-content">
+                <h3>Laboratory Verification</h3>
+            </div>
+            <form id="labresultCode">
+                <input type="text" id="labresult-code" name="code" placeholder="Enter your code here" required>
+                <button type="submit">Verify</button>
+            </form>
         </div>
-    
-    <div class="dashboard">
-        <div class="dashboard-content">
-            <h3>Laboratory Verification</h3>
-        </div>
-        <form id="labresultCode">
-            <input type="text" id="labresult-code" name="code" placeholder="Enter your code here" required>
-            <button type="submit">Verify</button>
-        </form>
-          </div>
-          <div id="instruction-container">
+
+        <div id="instruction-container">
             <div id="left-instruction">
                 <h3>Instructions</h3>
                 <p>1. Check your receipt.</p>
@@ -61,8 +76,9 @@
                 <p>4. Pindutin ang "verify".</p>
                 <p>5. Sa wakas, nakapaglogin ka na at maaari mo na i-download ang pdf file ng iyong result.</p>
             </div>
+        </div>
     </div>
-    </div>
-  </div>
+
+    <script src="notification.js"></script>
 </body>
 </html>
