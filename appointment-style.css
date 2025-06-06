@@ -242,7 +242,7 @@ h2 {
 .appointment-form {
   display: flex;
   justify-content: center;
-  gap: 30px;
+  gap: 50px;
   margin-top: 1rem;
   flex-wrap: wrap;
   align-items: flex-start;  
@@ -265,7 +265,7 @@ input[type="time"] {
   border-radius: 5px;
 }
 
-button {
+.next-button {
   padding: 0.5rem 2rem;
   background-color: #001d74;
   color: white;
@@ -275,9 +275,8 @@ button {
 }
 
 .form-footer {
-  text-align: right;  /* para ang button naka-right align sa container */
-  margin-top: -0.9rem;   /* space sa taas para may gap mula sa inputs */
-  margin-left: auto;  /* para mag-push sa right */
-  width: 100%;        /* para kunin buong lapad ng parent */
-  max-width: 500px;
+  text-align: right; 
+  margin-top: -0.9rem;   
+  margin-left: auto; 
+  width: 100%;       
 }
