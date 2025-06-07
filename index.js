@@ -503,42 +503,102 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
   
+  // Update the handleLogin function to include security features
   function handleLogin(event) {
-    event.preventDefault(); // Prevent form submission
-  
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
-  
-    console.log('Sending AJAX request...');
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', 'login.php', true); // Replace 'login.php' with your server-side script
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-  
-    xhr.onreadystatechange = function () {
-      console.log('AJAX readyState:', xhr.readyState);
-      if (xhr.readyState === 4) {
-        console.log('AJAX status:', xhr.status);
-        if (xhr.status === 200) {
-          console.log('Response:', xhr.responseText);
-          const response = JSON.parse(xhr.responseText);
-          const responseMessage = document.getElementById('responseMessage');
-          if (response.success) {
-            responseMessage.textContent = 'Login successful!';
-            responseMessage.style.color = 'green';
-          } else {
-            responseMessage.textContent = 'Login failed: ' + response.message;
-            responseMessage.style.color = 'red';
-          }
+    event.preventDefault();
+
+    try {
+        // Check for brute force protection
+        window.auth.checkBruteForceProtection();
+
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        const rememberMe = document.getElementById('rememberMe').checked;
+
+        // Save remember me preference
+        if (rememberMe) {
+            localStorage.setItem('rememberedUser', JSON.stringify({ username }));
         } else {
-          console.error('Error: AJAX request failed.');
+            localStorage.removeItem('rememberedUser');
         }
-      }
-    };
-  
-    const data = `username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`;
-    console.log('Data sent:', data);
-    xhr.send(data);
-  }
+
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', 'login.php', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    try {
+                        const response = JSON.parse(xhr.responseText);
+                        const responseMessage = document.getElementById('responseMessage');
+                        
+                        if (response.success) {
+                            // Start session
+                            window.auth.sessionManager.startSession(response.userData);
+                            responseMessage.textContent = 'Login successful!';
+                            responseMessage.style.color = 'green';
+                            window.location.href = 'dashboard.html';
+                        } else {
+                            // Increment failed login attempts
+                            window.auth.incrementLoginAttempts();
+                            responseMessage.textContent = 'Login failed: ' + response.message;
+                            responseMessage.style.color = 'red';
+                        }
+                    } catch (error) {
+                        console.error('Error parsing response:', error);
+                        throw new Error('Invalid server response');
+                    }
+                } else {
+                    console.error('Error: AJAX request failed.');
+                    throw new Error('Server communication error');
+                }
+            }
+        };
+
+        const data = `username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`;
+        xhr.send(data);
+    } catch (error) {
+        const responseMessage = document.getElementById('responseMessage');
+        responseMessage.textContent = error.message;
+        responseMessage.style.color = 'red';
+    }
+}
+
+// Add session check on page load
+document.addEventListener('DOMContentLoaded', function() {
+    // Check for remembered user
+    const rememberedUser = localStorage.getItem('rememberedUser');
+    if (rememberedUser) {
+        const { username } = JSON.parse(rememberedUser);
+        document.getElementById('username').value = username;
+        document.getElementById('rememberMe').checked = true;
+    }
+
+    // Add login form handler
+    const loginForm = document.getElementById('loginForm');
+    if (loginForm) {
+        loginForm.addEventListener('submit', handleLogin);
+    }
+
+    // Monitor user activity
+    ['click', 'keypress', 'scroll', 'mousemove'].forEach(event => {
+        document.addEventListener(event, () => {
+            if (window.auth.sessionManager.getSession()) {
+                window.auth.sessionManager.updateActivity();
+            }
+        });
+    });
+
+    // Check session every minute
+    setInterval(() => {
+        if (window.auth.sessionManager.getSession() && !window.auth.sessionManager.checkSession()) {
+            alert('Your session has expired. Please log in again.');
+            window.location.href = 'index.html';
+        }
+    }, 60000);
+});
+
   document.getElementById('registrationForm').addEventListener('submit', function (e) {
     e.preventDefault();
   
