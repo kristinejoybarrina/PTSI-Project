@@ -588,3 +588,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+fetch('login.php', {
+    method: 'POST',
+    body: formData
+})
+.then(response => response.json())
+.then(data => {
+    if (data.success) {
+        window.location.href = 'dashboard.html'; 
+    }
+})
