@@ -19,6 +19,10 @@
             <form id="loginForm">
                 <input type="text" id="username" name="username" placeholder="Username" required>
                 <input type="password" id="password" name="password" placeholder="Password" required>
+                <div class="remember-me">
+                    <input type="checkbox" id="rememberMe">
+                    <label for="rememberMe">Remember me</label>
+                </div>
                 <button type="submit">Login</button>
             </form>
             <p id="responseMessage" style="margin-top: 10px;"></p>
@@ -27,21 +31,7 @@
 
     </div>
 
-  <script>
-
-      function toggleForms() {
-          const loginContainer = document.getElementById('loginContainer');
-          const signupContainer = document.getElementById('signupContainer');
-          
-          if (loginContainer.style.display === 'none') {
-              loginContainer.style.display = 'block';
-              signupContainer.style.display = 'none';
-          } else {
-              loginContainer.style.display = 'none';
-              signupContainer.style.display = 'block';
-          }
-      }
-  </script>
-  <script src="index.js"></script>
+    <script src="auth.js"></script>
+    <script src="index.js"></script>
 </body>
 </html>
