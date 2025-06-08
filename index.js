@@ -147,7 +147,3 @@ fetch('login.php', {
         window.location.href = data.redirect || 'dashboard.html'; 
     }
 })
-.catch(error => {
-      console.error('Registration error:', error);
-      alert('An error occurred during login.');
-    });
