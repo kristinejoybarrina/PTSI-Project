@@ -28,7 +28,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // THIS IS CRUCIAL
         if (password_verify($password, $user['password'])) {
             $_SESSION['user'] = $user;
-            header('Location: dashboard.html');
             echo json_encode([
                 'success' => true,
                 'message' => 'Login successful.',

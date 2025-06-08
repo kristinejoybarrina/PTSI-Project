@@ -154,7 +154,7 @@ a:hover {
 
   #login-bg {
     display: block;
-    background-image: url('BG.png');
+    background-image: url('img/BG.png');
     background-size: cover;
     background-position: center;
     width: 100vw;
