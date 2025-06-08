@@ -658,3 +658,196 @@ fetch('login.php', {
         window.location.href = 'dashboard.html'; 
     }
 })
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Initialize CSRF protection
+    const csrfToken = SecurityUtils.setCSRFToken();
+
+    // Cache DOM elements
+    const loginForm = document.getElementById('loginForm');
+    const usernameInput = document.getElementById('username');
+    const passwordInput = document.getElementById('password');
+    const togglePasswordBtn = document.getElementById('togglePassword');
+    const loginButton = document.getElementById('loginButton');
+    const rememberMeCheckbox = document.getElementById('rememberMe');
+    const resetModal = document.getElementById('resetModal');
+    const resetForm = document.getElementById('resetForm');
+    const forgotPasswordLink = document.getElementById('forgotPassword');
+    const closeModalBtn = document.querySelector('.close-modal');
+
+    // Set initial focus
+    usernameInput.focus();
+
+    // Password visibility toggle
+    togglePasswordBtn.addEventListener('click', () => {
+        const type = passwordInput.type === 'password' ? 'text' : 'password';
+        passwordInput.type = type;
+        togglePasswordBtn.querySelector('i').className = `fa fa-${type === 'password' ? 'eye' : 'eye-slash'}`;
+        AccessibilityUtils.announceScreenReader(`Password ${type === 'password' ? 'hidden' : 'shown'}`);
+    });
+
+    // Real-time username validation
+    usernameInput.addEventListener('input', () => {
+        const isValid = ValidationUtils.validateUsername(usernameInput.value);
+        const validationMessage = document.getElementById('username-validation');
+        validationMessage.textContent = isValid ? '' : 'Username must be 3-20 characters, alphanumeric and underscore only';
+        validationMessage.className = `validation-message ${isValid ? 'valid' : 'invalid'}`;
+    });
+
+    // Password strength indicator
+    passwordInput.addEventListener('input', () => {
+        const { score, strength } = ValidationUtils.validatePasswordStrength(passwordInput.value);
+        const strengthElement = document.getElementById('password-strength');
+        const validationMessage = document.getElementById('password-validation');
+        
+        // Update strength indicator
+        strengthElement.className = `password-strength strength-${score}`;
+        
+        // Update validation message
+        let message = [];
+        if (!strength.isLongEnough) message.push('At least 8 characters');
+        if (!strength.hasLower || !strength.hasUpper) message.push('Mix of upper and lowercase letters');
+        if (!strength.hasNumber) message.push('At least one number');
+        if (!strength.hasSpecial) message.push('At least one special character');
+        
+        validationMessage.textContent = message.join(', ');
+        validationMessage.className = `validation-message ${message.length === 0 ? 'valid' : 'invalid'}`;
+    });
+
+    // Remember me functionality
+    if (localStorage.getItem('rememberedUser')) {
+        const { username } = JSON.parse(localStorage.getItem('rememberedUser'));
+        usernameInput.value = username;
+        rememberMeCheckbox.checked = true;
+    }
+
+    // Handle login form submission
+    loginForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        try {
+            // Check network connection
+            if (!NetworkUtils.isOnline()) {
+                throw new Error('No internet connection. Please check your network.');
+            }
+
+            // Check brute force protection
+            window.auth.checkBruteForceProtection();
+
+            // Show loading state
+            const originalButtonText = UIUtils.showLoading(loginButton);
+
+            // Sanitize inputs
+            const username = ValidationUtils.sanitizeInput(usernameInput.value);
+            const password = passwordInput.value; // Don't sanitize password
+
+            // Remember user if checkbox is checked
+            if (rememberMeCheckbox.checked) {
+                localStorage.setItem('rememberedUser', JSON.stringify({ username }));
+            } else {
+                localStorage.removeItem('rememberedUser');
+            }
+
+            // Send login request
+            const response = await fetch('login.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-Token': csrfToken
+                },
+                body: JSON.stringify({ username, password })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                // Start session
+                window.auth.sessionManager.startSession(data.userData);
+                UIUtils.showSuccess('Login successful!', document.getElementById('responseMessage'));
+
+                // Start session timer
+                SessionUtils.startSessionTimer(30, 5, {
+                    onWarning: (minutes) => {
+                        UIUtils.showError(`Your session will expire in ${minutes} minutes. Please save your work.`, document.getElementById('responseMessage'));
+                    },
+                    onTimeout: () => {
+                        window.auth.sessionManager.endSession();
+                    }
+                });
+
+                // Redirect to dashboard
+                setTimeout(() => window.location.href = 'client-side/dashboard/dashboard.html', 1500);
+            } else {
+                throw new Error(data.message || 'Login failed');
+            }
+        } catch (error) {
+            UIUtils.showError(error.message, document.getElementById('responseMessage'));
+            window.auth.incrementLoginAttempts();
+        } finally {
+            UIUtils.hideLoading(loginButton, 'Login');
+        }
+    });
+
+    // Password reset modal functionality
+    forgotPasswordLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        resetModal.style.display = 'block';
+    });
+
+    closeModalBtn.addEventListener('click', () => {
+        resetModal.style.display = 'none';
+    });
+
+    window.addEventListener('click', (e) => {
+        if (e.target === resetModal) {
+            resetModal.style.display = 'none';
+        }
+    });
+
+    // Handle password reset form
+    resetForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const emailInput = document.getElementById('resetEmail');
+        
+        try {
+            if (!ValidationUtils.validateEmail(emailInput.value)) {
+                throw new Error('Please enter a valid email address');
+            }
+
+            const response = await fetch('reset-password.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-Token': csrfToken
+                },
+                body: JSON.stringify({ email: emailInput.value })
+            });
+
+            const data = await response.json();
+            
+            if (data.success) {
+                UIUtils.showSuccess('Password reset link has been sent to your email', document.getElementById('responseMessage'));
+                resetModal.style.display = 'none';
+            } else {
+                throw new Error(data.message || 'Failed to send reset link');
+            }
+        } catch (error) {
+            UIUtils.showError(error.message, document.getElementById('responseMessage'));
+        }
+    });
+
+    // Network status handling
+    NetworkUtils.handleOffline(() => {
+        UIUtils.showError('You are offline. Please check your internet connection.', document.getElementById('responseMessage'));
+    });
+
+    NetworkUtils.handleOnline(() => {
+        UIUtils.showSuccess('You are back online!', document.getElementById('responseMessage'));
+    });
+
+    // Keyboard navigation
+    const focusableElements = loginForm.querySelectorAll('input, button, a');
+    loginForm.addEventListener('keydown', (e) => {
+        AccessibilityUtils.handleKeyboardNavigation(e, Array.from(focusableElements));
+    });
+});
