@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.removeItem('user'); 
 
             // Redirect to login page
-            window.location.href = 'index.html'; 
+            window.location.href = '../index.html'; 
         });
     }
 });
