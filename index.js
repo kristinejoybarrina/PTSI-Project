@@ -136,14 +136,24 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }, 60000);
 });
+document.addEventListener('DOMContentLoaded', () => {
+    const myForm = document.getElementById('loginForm');
 
-fetch('login.php', {
-    method: 'POST',
-    body: formData
-})
-.then(response => response.json())
-.then(data => {
-    if (data.success) {
-        window.location.href = data.redirect || 'dashboard.html'; 
-    }
-})
+    myForm.addEventListener('submit', function (e) {
+        e.preventDefault(); // Stop default form action
+
+        const formData = new FormData(myForm);
+
+        fetch('login.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Use absolute path from your domain root
+                window.location.href = data.redirect || '/PTSI-Project/client/dashboard.html';
+            }
+        });
+    });
+});
